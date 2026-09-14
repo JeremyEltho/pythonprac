@@ -5,9 +5,9 @@ load_dotenv()
 
 client = genai.Client()
 
-response = client.models.generate_content(
-    model="gemini-2.0-flash",
-    contents="Explain how AI works in a few words"
+interaction = client.interactions.create(
+    model="gemini-3.8-flash",
+    input="Explain how AI works in a few words"
 )
 
-print(response.text)
+print(interaction.output_text)
