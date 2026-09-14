@@ -4,10 +4,24 @@ from dotenv import load_dotenv
 load_dotenv()
 
 client = genai.Client()
+chat = client.chats.create(model="gemini-2.5-flash")
 
-interaction = client.interactions.create(
-    model="gemini-3.8-flash",
-    input="Explain how AI works in a few words"
+setup = chat.send_message(
+    "Think of an animal and keep it secret. Don't tell me what it is. "
+    "I'm going to ask you yes or no questions or make guesses to try to figure it out. "
+    "Answer 'Yes', 'No', or 'Maybe' to yes/no questions. "
+    "If I guess the exact animal correctly, respond with 'CORRECT!' followed by the animal name. "
+    "Confirm you're ready."
 )
+print(setup.text)
 
-print(interaction.output_text)
+for i in range(20):
+    question = input(f'Ask the model a question ({i+1}/20): ')
+    response = chat.send_message(question)
+    print(response.text)
+
+    if "CORRECT" in response.text.upper():
+        print(f"\nCongrats, you got it in {i+1} questions!")
+        break
+else:
+    print("\nOut of questions, you didn't guess it this time.")
