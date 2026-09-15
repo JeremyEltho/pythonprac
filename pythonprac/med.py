@@ -41,7 +41,8 @@ def find_invalid_records(
     constraints = {
         'patient_id': isinstance(patient_id, str) and re.fullmatch('p\d+', patient_id, re.IGNORECASE),
         'age': isinstance(age, int) and age >= 18,
-        'gender':isinstance(gender, str) and gender.lower() in ('male', 'female')
+        'gender': isinstance(gender, str) and gender.lower() in ('male', 'female'),
+        'diagnosis': isinstance(diagnosis,str) or is not
         
     }
     return constraints
